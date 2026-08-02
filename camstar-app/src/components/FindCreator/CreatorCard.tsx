@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import type { Creator } from '@/data/creators';
 
 interface CreatorCardProps {
@@ -22,50 +21,49 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
     return num.toString();
   };
 
+  // Get initials for the avatar
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  };
+
   return (
-    <div className="bg-[#1a1a1a] border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 shadow-lg">
+    <div className="bg-[#1a1a1a] border border-zinc-800 rounded-2xl p-6 hover:border-zinc-600 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 shadow-xl relative overflow-hidden">
       
-      {/* Image Header */}
-      <div className="relative h-64 w-full bg-zinc-900 overflow-hidden">
-        {creator.imageUrl ? (
-          <Image 
-            src={creator.imageUrl} 
-            alt={creator.name} 
-            fill 
-            className="object-cover group-hover:scale-105 transition-transform duration-500" 
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-zinc-600">No Image</div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-80" />
-        
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-brand-light text-xs font-semibold px-3 py-1 rounded-full border border-white/10">
-          {creator.category}
+      {/* Decorative gradient blob */}
+      <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#b81104] rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
+
+      {/* Header Info */}
+      <div className="flex items-start gap-4 mb-6 relative z-10">
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#b81104] to-red-700 flex items-center justify-center text-xl font-bold text-white shadow-lg border border-red-500/20 flex-shrink-0">
+           {getInitials(creator.name)}
+        </div>
+        <div className="flex flex-col min-w-0 pt-0.5">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <h3 className="text-xl font-bold text-white tracking-tight truncate">{creator.name}</h3>
+            {creator.isVerified && (
+              <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9.96 5.864L8.03 4.148 5.76 4.79l-.82 2.223-2.127.973-.207 2.36 1.118 2.083-1.118 2.083.207 2.36 2.127.973.82 2.223 2.27.642 1.93-1.716 2.36.207 2.083-1.118L16.48 16.5l2.223-.82.973-2.127 2.36-.207 2.083-1.118-2.083-1.118-2.36-.207-.973-2.127-2.223-.82-2.083 1.118-2.36-.207z" opacity=".2"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            )}
+          </div>
+          <div className="flex items-center gap-3 text-sm text-zinc-400">
+            <p className="flex items-center gap-1">
+              <svg className="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              {creator.state}
+            </p>
+            <span className="w-1 h-1 rounded-full bg-zinc-600"></span>
+            <span className="text-zinc-300 font-medium truncate">{creator.category}</span>
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col flex-1 relative -mt-12 z-10">
-        <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-2xl font-bold text-white tracking-tight">{creator.name}</h3>
-          {creator.isVerified && (
-            <svg className="w-5 h-5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9.96 5.864L8.03 4.148 5.76 4.79l-.82 2.223-2.127.973-.207 2.36 1.118 2.083-1.118 2.083.207 2.36 2.127.973.82 2.223 2.27.642 1.93-1.716 2.36.207 2.083-1.118L16.48 16.5l2.223-.82.973-2.127 2.36-.207 2.083-1.118-2.083-1.118-2.36-.207-.973-2.127-2.223-.82-2.083 1.118-2.36-.207z" opacity=".2"/>
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          )}
-        </div>
-        
-        <p className="text-zinc-400 text-sm mb-4 flex items-center gap-1.5">
-          <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          {creator.state}
-        </p>
-
+      <div className="flex flex-col flex-1 relative z-10">
         {creator.languages && creator.languages.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-1.5 mb-5">
             {creator.languages.map(lang => (
-              <span key={lang} className="text-xs bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-md">
+              <span key={lang} className="text-xs bg-zinc-900 border border-zinc-800 text-zinc-400 px-2.5 py-1 rounded-full">
                 {lang}
               </span>
             ))}
@@ -73,7 +71,7 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
         )}
 
         {/* Followers */}
-        <div className="grid grid-cols-3 gap-2 mb-8 pt-4 border-t border-zinc-800">
+        <div className="grid grid-cols-3 gap-2 mb-6 pt-5 border-t border-zinc-800/80">
           <FollowerStat 
             platform="instagram" 
             count={creator.followers.instagram} 
@@ -96,10 +94,10 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
           <div className="relative flex-1">
             <button 
               onClick={() => setShowSocials(!showSocials)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-medium transition-colors text-sm"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-zinc-800/50 hover:bg-zinc-800 text-white rounded-lg font-medium transition-colors text-sm border border-zinc-700/50 hover:border-zinc-600"
             >
               Socials
-              <svg className={`w-4 h-4 transition-transform ${showSocials ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              <svg className={`w-3.5 h-3.5 transition-transform ${showSocials ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             
             {showSocials && (
@@ -128,7 +126,7 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
           
           <button 
             onClick={handleContact}
-            className="flex-1 px-4 py-3 bg-[#b81104] hover:bg-red-600 text-white rounded-xl font-bold transition-colors text-sm text-center"
+            className="flex-1 px-4 py-2.5 bg-[#b81104] hover:bg-red-600 text-white rounded-lg font-medium transition-colors text-sm text-center shadow-[0_0_15px_rgba(184,17,4,0.3)] hover:shadow-[0_0_20px_rgba(184,17,4,0.5)]"
           >
             Contact
           </button>
@@ -139,8 +137,8 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
 
   function FollowerStat({ platform, count, icon }: { platform: string, count?: number, icon: React.ReactNode }) {
     return (
-      <div className="flex flex-col items-center justify-center text-center p-2 rounded-lg bg-zinc-900/50">
-        <svg className="w-5 h-5 text-zinc-500 mb-1.5" fill="currentColor" viewBox="0 0 24 24">
+      <div className="flex flex-col items-center justify-center text-center p-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50">
+        <svg className="w-5 h-5 text-zinc-400 mb-1.5" fill="currentColor" viewBox="0 0 24 24">
           {icon}
         </svg>
         <span className="text-xs font-semibold text-zinc-300">
