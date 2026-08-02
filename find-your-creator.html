@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camstar Network | Find your Creator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        camstar: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 40px rgba(0, 0, 0, 0.03)',
+                        'hover': '0 12px 60px rgba(0, 0, 0, 0.06)',
+                        'glow': '0 0 40px rgba(220, 38, 38, 0.12)',
+                        'inner-light': 'inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafafa;
+            color: #0f172a;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 40% 0%, hsla(0,100%,74%,0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, hsla(210,100%,90%,0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(0,0%,96%,1) 0px, transparent 50%);
+            background-color: #ffffff;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #111827 0%, #4b5563 100%);
+        }
+        .text-gradient-red {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+        
+        .hero-element {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">C</div>
+                <span class="font-semibold tracking-tight text-lg hidden sm:block text-zinc-900">Camstar Network</span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-zinc-500">
+                <a href="#search" class="hover:text-zinc-900 transition-colors">Creators</a>
+                <a href="#states" class="hover:text-zinc-900 transition-colors">States</a>
+                <a href="#why-choose" class="hover:text-zinc-900 transition-colors">Why Us</a>
+            </div>
+            <a href="https://wa.me/917002107310" target="_blank" class="bg-zinc-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-camstar-600 transition-colors duration-300 shadow-lg shadow-zinc-900/20 hover:shadow-camstar-600/30">
+                Join Network
+            </a>
+        </div>
+    </nav>
+
+    <!-- SECTION 2 — SEARCH -->
+    <section id="search" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="fade-in-section text-center max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-8">Find Your Perfect Creator</h2>
+            
+            <div class="relative bg-white rounded-2xl shadow-soft border border-zinc-100 p-2 flex items-center group focus-within:shadow-hover focus-within:border-zinc-200 transition-all duration-300">
+                <div class="pl-4 pr-2 text-zinc-400 group-focus-within:text-camstar-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="text" placeholder="Search by influencer, state, city, niche..." class="w-full py-3 px-2 outline-none text-base text-zinc-800 placeholder:text-zinc-400 bg-transparent">
+                <button class="bg-zinc-900 text-white px-6 py-3 font-medium rounded-xl hover:bg-camstar-600 transition-colors shadow-sm">Search</button>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-2.5 mt-8">
+                <button class="px-4 py-2 bg-white border border-zinc-200 rounded-full font-medium text-sm text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm">State</button>
+                <button class="px-4 py-2 bg-white border border-zinc-200 rounded-full font-medium text-sm text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm">City</button>
+                <button class="px-4 py-2 bg-white border border-zinc-200 rounded-full font-medium text-sm text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm">Platform</button>
+                <button class="px-4 py-2 bg-white border border-zinc-200 rounded-full font-medium text-sm text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm">Followers</button>
+                <button class="px-4 py-2 bg-white border border-zinc-200 rounded-full font-medium text-sm text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm">Category</button>
+                <button class="px-4 py-2 bg-camstar-50 text-camstar-700 border border-camstar-100 rounded-full font-medium text-sm flex items-center gap-1.5 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 — BROWSE BY STATE -->
+    <section id="states" class="py-24 px-6 bg-white border-t border-zinc-100">
+        <div class="max-w-7xl mx-auto fade-in-section">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-3">Explore Across India</h2>
+                    <p class="text-zinc-500 font-medium text-lg">Choose a state to discover local influencers.</p>
+                </div>
+                <a href="#" class="text-camstar-600 font-medium hover:text-camstar-700 transition-colors mt-4 md:mt-0 flex items-center gap-1">View All States <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- State Cards -->
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">⛰️</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Assam</h3>
+                        <p class="text-camstar-600 font-medium text-sm">240 Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">☁️</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Meghalaya</h3>
+                        <p class="text-camstar-600 font-medium text-sm">125 Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">🏛️</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Delhi</h3>
+                        <p class="text-camstar-600 font-medium text-sm">1.2K Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">🎬</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Maharashtra</h3>
+                        <p class="text-camstar-600 font-medium text-sm">2.5K Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">🌴</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Kerala</h3>
+                        <p class="text-camstar-600 font-medium text-sm">800 Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+                <a href="#" class="group glass-card p-6 rounded-3xl hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex justify-between items-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-3xl mb-3 opacity-90 group-hover:scale-110 transition-transform origin-left">🏖️</div>
+                        <h3 class="text-xl font-bold text-zinc-900 mb-1">Goa</h3>
+                        <p class="text-camstar-600 font-medium text-sm">450 Creators</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-camstar-50 transition-colors relative z-10 text-zinc-400 group-hover:text-camstar-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 — FEATURED INFLUENCERS -->
+    <section class="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
+        <div class="fade-in-section mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-3">Trending Creators</h2>
+                <p class="text-zinc-500 font-medium text-lg">Top performing profiles this week.</p>
+            </div>
+        </div>
+        
+        <div class="flex gap-6 overflow-x-auto pb-8 snap-x custom-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0">
+            <!-- Profile 1 -->
+            <div class="glass-card rounded-3xl p-6 min-w-[320px] snap-center hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Priya" class="w-16 h-16 rounded-full object-cover shadow-sm">
+                    <div>
+                        <h3 class="font-bold text-lg text-zinc-900 flex items-center gap-1">Priya Sharma <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg></h3>
+                        <p class="text-zinc-500 text-sm font-medium">Delhi, India</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6 bg-zinc-50/50 rounded-2xl p-4">
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Followers</p>
+                        <p class="font-bold text-xl text-zinc-900">245K</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Engagement</p>
+                        <p class="font-bold text-xl text-camstar-600">4.9%</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 mb-8 flex-wrap mt-auto">
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Fashion</span>
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Lifestyle</span>
+                </div>
+                <button class="w-full py-3 bg-zinc-900 text-white font-medium rounded-xl hover:bg-camstar-600 transition-colors duration-300 shadow-sm">View Profile</button>
+            </div>
+            
+            <!-- Profile 2 -->
+            <div class="glass-card rounded-3xl p-6 min-w-[320px] snap-center hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Rahul" class="w-16 h-16 rounded-full object-cover shadow-sm">
+                    <div>
+                        <h3 class="font-bold text-lg text-zinc-900 flex items-center gap-1">Rahul Kumar <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg></h3>
+                        <p class="text-zinc-500 text-sm font-medium">Mumbai, India</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6 bg-zinc-50/50 rounded-2xl p-4">
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Followers</p>
+                        <p class="font-bold text-xl text-zinc-900">512K</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Engagement</p>
+                        <p class="font-bold text-xl text-camstar-600">5.2%</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 mb-8 flex-wrap mt-auto">
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Tech</span>
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Finance</span>
+                </div>
+                <button class="w-full py-3 bg-zinc-900 text-white font-medium rounded-xl hover:bg-camstar-600 transition-colors duration-300 shadow-sm">View Profile</button>
+            </div>
+            
+            <!-- Profile 3 -->
+            <div class="glass-card rounded-3xl p-6 min-w-[320px] snap-center hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Ananya" class="w-16 h-16 rounded-full object-cover shadow-sm">
+                    <div>
+                        <h3 class="font-bold text-lg text-zinc-900 flex items-center gap-1">Ananya Singh <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg></h3>
+                        <p class="text-zinc-500 text-sm font-medium">Bangalore, India</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6 bg-zinc-50/50 rounded-2xl p-4">
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Followers</p>
+                        <p class="font-bold text-xl text-zinc-900">850K</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Engagement</p>
+                        <p class="font-bold text-xl text-camstar-600">3.8%</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 mb-8 flex-wrap mt-auto">
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Beauty</span>
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Lifestyle</span>
+                </div>
+                <button class="w-full py-3 bg-zinc-900 text-white font-medium rounded-xl hover:bg-camstar-600 transition-colors duration-300 shadow-sm">View Profile</button>
+            </div>
+            
+            <!-- Profile 4 -->
+            <div class="glass-card rounded-3xl p-6 min-w-[320px] snap-center hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Vikram" class="w-16 h-16 rounded-full object-cover shadow-sm">
+                    <div>
+                        <h3 class="font-bold text-lg text-zinc-900 flex items-center gap-1">Vikram Das <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg></h3>
+                        <p class="text-zinc-500 text-sm font-medium">Kolkata, India</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6 bg-zinc-50/50 rounded-2xl p-4">
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Followers</p>
+                        <p class="font-bold text-xl text-zinc-900">120K</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-400 mb-1">Engagement</p>
+                        <p class="font-bold text-xl text-camstar-600">7.1%</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 mb-8 flex-wrap mt-auto">
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Food</span>
+                    <span class="px-3 py-1 bg-white border border-zinc-100 rounded-full text-xs font-medium text-zinc-600 shadow-sm">Travel</span>
+                </div>
+                <button class="w-full py-3 bg-zinc-900 text-white font-medium rounded-xl hover:bg-camstar-600 transition-colors duration-300 shadow-sm">View Profile</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6 — HOW IT WORKS & WHY CHOOSE -->
+    <section id="why-choose" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 fade-in-section items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-10">How It Works</h2>
+                <div class="space-y-8">
+                    <div class="flex gap-5 group">
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 text-zinc-600 font-bold flex items-center justify-center shrink-0 group-hover:bg-camstar-500 group-hover:text-white transition-colors duration-300 shadow-sm">1</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-zinc-900 mb-1">Choose State & Niche</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">Select the region and content category you want to target to find hyper-local voices.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 group">
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 text-zinc-600 font-bold flex items-center justify-center shrink-0 group-hover:bg-camstar-500 group-hover:text-white transition-colors duration-300 shadow-sm">2</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-zinc-900 mb-1">Browse Creators</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">Filter profiles seamlessly by followers, engagement rate, and past brand work.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 group">
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 text-zinc-600 font-bold flex items-center justify-center shrink-0 group-hover:bg-camstar-500 group-hover:text-white transition-colors duration-300 shadow-sm">3</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-zinc-900 mb-1">Compare Profiles</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">Review analytics and audience demographics safely through our detailed dashboards.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 group">
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 text-zinc-600 font-bold flex items-center justify-center shrink-0 group-hover:bg-camstar-500 group-hover:text-white transition-colors duration-300 shadow-sm">4</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-zinc-900 mb-1">Start Collaboration</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">Connect directly, negotiate terms, and launch your campaign effortlessly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-10 md:p-12 rounded-[2rem] border border-zinc-100 shadow-hover relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-camstar-50 rounded-full blur-[60px] -z-10 -translate-y-1/2 translate-x-1/2"></div>
+                <h2 class="text-2xl font-bold tracking-tight text-zinc-900 mb-8">Why Brands Choose Us</h2>
+                
+                <ul class="space-y-6 relative z-10">
+                    <li class="flex gap-4 items-start">
+                        <div class="mt-1 text-camstar-500 bg-camstar-50 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div>
+                            <strong class="text-base font-semibold text-zinc-900 block mb-0.5">Verified Creators</strong>
+                            <span class="text-zinc-500 text-sm leading-relaxed">Every profile goes through strict manual verification for authentic audiences.</span>
+                        </div>
+                    </li>
+                    <li class="flex gap-4 items-start">
+                        <div class="mt-1 text-camstar-500 bg-camstar-50 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div>
+                            <strong class="text-base font-semibold text-zinc-900 block mb-0.5">Regional Reach</strong>
+                            <span class="text-zinc-500 text-sm leading-relaxed">Connect with hyper-local influencers across the remotest parts of India.</span>
+                        </div>
+                    </li>
+                    <li class="flex gap-4 items-start">
+                        <div class="mt-1 text-camstar-500 bg-camstar-50 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div>
+                            <strong class="text-base font-semibold text-zinc-900 block mb-0.5">Performance Analytics</strong>
+                            <span class="text-zinc-500 text-sm leading-relaxed">Track real-time ROI, reach, and engagement metrics for all campaigns.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8 — PLATFORM STATS -->
+    <section class="py-20 border-t border-zinc-100 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center fade-in-section">
+            <div class="p-4">
+                <h3 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2">15k<span class="text-camstar-500">+</span></h3>
+                <p class="font-medium text-sm text-zinc-500">Verified Influencers</p>
+            </div>
+            <div class="p-4">
+                <h3 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2">28<span class="text-camstar-500">+</span></h3>
+                <p class="font-medium text-sm text-zinc-500">States Covered</p>
+            </div>
+            <div class="p-4">
+                <h3 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2">500<span class="text-camstar-500">+</span></h3>
+                <p class="font-medium text-sm text-zinc-500">Brands</p>
+            </div>
+            <div class="p-4">
+                <h3 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2">1.2k<span class="text-camstar-500">+</span></h3>
+                <p class="font-medium text-sm text-zinc-500">Campaigns Done</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10 — JOIN AS CREATOR -->
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="bg-gradient-to-br from-zinc-900 to-black rounded-[2rem] p-10 md:p-16 text-center text-white shadow-hover fade-in-section relative overflow-hidden">
+            <!-- Subtle glow in the background -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-camstar-600 rounded-full filter blur-[120px] opacity-20 -z-0"></div>
+            
+            <div class="relative z-10 max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-5">Become a Creator</h2>
+                <p class="text-base md:text-lg text-zinc-400 mb-10 max-w-xl mx-auto">Join the Camstar Network to grow your influence and collaborate with India's biggest brands effortlessly.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#" class="px-8 py-3.5 bg-white text-black font-semibold rounded-full shadow-lg hover:scale-105 transition-transform duration-300">Apply Now</a>
+                    <a href="#" class="px-8 py-3.5 bg-transparent border border-zinc-700 text-white font-semibold rounded-full hover:bg-zinc-800 transition-colors duration-300">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-zinc-100 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-1">
+                <a href="index.html" class="flex items-center gap-3 group mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center font-bold">C</div>
+                    <span class="font-semibold tracking-tight text-lg text-zinc-900">Camstar Network</span>
+                </a>
+                <p class="text-zinc-500 text-sm leading-relaxed mb-6">India's premium influencer marketplace connecting brands with verified creators across all states.</p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center hover:bg-zinc-100 transition-colors text-zinc-600 font-medium">𝕏</a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center hover:bg-zinc-100 transition-colors text-zinc-600 font-medium">In</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-semibold text-zinc-900 mb-5">Platform</h4>
+                <ul class="space-y-3 text-sm text-zinc-500 font-medium">
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Browse Creators</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Search by State</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-zinc-900 mb-5">Influencers</h4>
+                <ul class="space-y-3 text-sm text-zinc-500 font-medium">
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Join Network</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Creator Guidelines</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Success Stories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-zinc-900 mb-5">Company</h4>
+                <ul class="space-y-3 text-sm text-zinc-500 font-medium">
+                    <li><a href="index.html" class="hover:text-camstar-600 transition-colors">About Agency</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Contact</a></li>
+                    <li><a href="#" class="hover:text-camstar-600 transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 border-t border-zinc-100 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-zinc-400 text-sm font-medium">&copy; 2026 Camstar Network. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Animations Script -->
+    <script>
+        // Setup GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animations
+        gsap.to(".hero-element", {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power2.out",
+            delay: 0.1
+        });
+
+        // Scroll Animations for sections
+        const fadeSections = document.querySelectorAll('.fade-in-section');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeSections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
