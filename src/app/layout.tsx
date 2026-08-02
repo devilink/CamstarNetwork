@@ -9,8 +9,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Camstar Network | Creative Content",
-  description: "Helping brands dominate online with aggressive engagement strategies and stunning visuals.",
+  title: "Camstar Network | Creative Content & Influencer Marketing",
+  description: "Helping brands dominate online with aggressive engagement strategies, stunning visuals, and top-tier influencer collaborations.",
+  keywords: ["Camstar Network", "Camstar", "Influencer Marketing", "Creative Content", "Brand Growth", "Digital Marketing"],
+  openGraph: {
+    title: "Camstar Network",
+    description: "Helping brands dominate online with aggressive engagement strategies and stunning visuals.",
+    url: "https://camstarnetwork.com",
+    siteName: "Camstar Network",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
