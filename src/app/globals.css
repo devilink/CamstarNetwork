@@ -13,6 +13,23 @@
   --color-accent-yellow: #fef08a;
   --color-text-main: #111111;
   --color-text-muted: #555555;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+}
+
+:root {
+  /* Main Background & Text */
+  --background: #f0ebd0; /* Beach Color */
+  --foreground: #000000;
+  
+  /* Major Brand Colors - Customize here! */
+  --brand-primary: #b81104; /* Camstar Red */
+  --brand-dark: #000000;    /* Deep Blacks */
+  --brand-light: #f0ebd0;   /* Pure White for cards/elements */
 }
 
 /* ===== Base Resets ===== */
@@ -99,6 +116,44 @@ body {
   background: #aaa;
 }
 
+/* Custom scrollbar for drag areas */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 16px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-top: 4px solid var(--brand-dark);
+  border-bottom: 4px solid var(--brand-dark);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--brand-primary); /* Tailwind red-600 */
+  border: 3px solid var(--brand-dark);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--brand-dark);
+}
+
+/* Hide scrollbar for default no-scrollbar areas */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Drag slider cursor states */
+.drag-slider.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+/* Outline Text for aesthetic depth */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+}
+
 /* ===== Flowpath Hero Utilities ===== */
 .liquid-glass {
   background: rgba(255, 255, 255, 0.01);
@@ -133,4 +188,3 @@ body {
 }
 .animate-dropdown { animation: dropdown-in 0.2s ease-out; }
 .duration-400 { transition-duration: 400ms; }
-
