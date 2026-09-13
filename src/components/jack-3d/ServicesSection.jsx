@@ -32,7 +32,7 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="bg-[#FFFFFF] text-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative z-10 -mt-10 sm:-mt-12 md:-mt-14 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+    <section id="services" className="bg-[#FFFFFF] text-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative z-10 -mt-10 sm:-mt-12 md:-mt-14 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
       <FadeIn y={40} className="mb-16 sm:mb-20 md:mb-28">
         <h2 className="font-black uppercase text-center text-[clamp(3rem,12vw,160px)] leading-none text-[#0C0C0C]">
           Services

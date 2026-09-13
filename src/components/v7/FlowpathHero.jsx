@@ -8,10 +8,9 @@ export default function FlowpathHero() {
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const navItems = [
-    { name: "Product", dropdown: ["Connections", "Workflows", "Insights"] },
-    { name: "Solutions", dropdown: ["Guides", "Use cases", "API reference"] },
-    { name: "About", dropdown: ["Our story", "Open roles", "Reach us"] },
-    { name: "Plans" }
+    { name: "Services", href: "#services" },
+    { name: "Projects", href: "#projects" },
+    { name: "About", href: "#about" }
   ];
 
   return (
@@ -46,12 +45,12 @@ export default function FlowpathHero() {
               onMouseEnter={() => setActiveDropdown(item.name)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className="flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-medium transition-colors cursor-pointer py-2">
+              <a href={item.href || "#"} className="flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-medium transition-colors cursor-pointer py-2">
                 {item.name}
                 {item.dropdown && (
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === item.name ? "rotate-180" : ""}`} />
                 )}
-              </button>
+              </a>
               
               {/* Dropdown - Added pt-2 wrapper to keep hover contiguous */}
               {item.dropdown && activeDropdown === item.name && (
@@ -71,10 +70,9 @@ export default function FlowpathHero() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-6">
-          <a href="#" className="text-white/90 hover:text-white text-sm font-medium transition-colors">Log in</a>
-          <button className="liquid-glass inline-flex items-center justify-center h-10 px-6 rounded-full text-white text-sm font-medium hover:bg-white/10 transition-colors whitespace-nowrap">
-            Try it free
-          </button>
+          <a href="mailto:contact@camstarnetwork.com" className="liquid-glass inline-flex items-center justify-center h-10 px-6 rounded-full text-white text-sm font-medium hover:bg-white/10 transition-colors whitespace-nowrap">
+            Contact Us
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -95,7 +93,7 @@ export default function FlowpathHero() {
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <div key={item.name} className="flex flex-col gap-2">
-                  <span className="text-white font-medium text-base">{item.name}</span>
+                  <a href={item.href || "#"} onClick={() => setMobileMenuOpen(false)} className="text-white font-medium text-base">{item.name}</a>
                   {item.dropdown && (
                     <div className="flex flex-col gap-2 pl-4 border-l border-white/10 ml-2">
                       {item.dropdown.map((subItem) => (
@@ -108,10 +106,9 @@ export default function FlowpathHero() {
                 </div>
               ))}
               <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-4">
-                <a href="#" className="text-white font-medium text-center py-2">Log in</a>
-                <button className="inline-flex items-center justify-center h-12 bg-white text-gray-900 rounded-full px-6 text-sm font-semibold hover:bg-white/90 transition-colors">
-                  Try it free
-                </button>
+                <a href="mailto:contact@camstarnetwork.com" className="inline-flex items-center justify-center h-12 bg-white text-gray-900 rounded-full px-6 text-sm font-semibold hover:bg-white/90 transition-colors">
+                  Contact Us
+                </a>
               </div>
             </div>
           </div>
@@ -131,12 +128,12 @@ export default function FlowpathHero() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
-            <button className="inline-flex items-center justify-center h-12 px-8 bg-white text-gray-900 text-sm font-semibold rounded-full hover:bg-white/90 transition-colors whitespace-nowrap">
+            <a href="#projects" className="inline-flex items-center justify-center h-12 px-8 bg-white text-gray-900 text-sm font-semibold rounded-full hover:bg-white/90 transition-colors whitespace-nowrap">
               View our work
-            </button>
-            <button className="inline-flex items-center justify-center h-12 px-8 liquid-glass rounded-full text-white text-sm font-semibold hover:bg-white/10 transition-colors whitespace-nowrap">
+            </a>
+            <a href="mailto:contact@camstarnetwork.com" className="inline-flex items-center justify-center h-12 px-8 liquid-glass rounded-full text-white text-sm font-semibold hover:bg-white/10 transition-colors whitespace-nowrap">
               Start a project
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { FadeIn, LiveProjectButton } from "./Reusable";
@@ -89,12 +89,21 @@ const projects = [
 ];
 
 function Card({ project, index, targetScale, progress }) {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const scale = useTransform(progress, [index * 0.33, 1], [1, targetScale]);
 
   return (
-    <div className="h-[85vh] flex items-center justify-center sticky top-24 md:top-32">
+    <div className={`flex items-center justify-center ${isMobile ? "h-auto mb-16" : "h-[85vh] sticky top-24 md:top-32"}`}>
       <motion.div 
-        style={{ scale, top: `calc(10vh + ${index * 28}px)` }}
+        style={isMobile ? { position: "relative", top: 0, scale: 1 } : { scale, top: `calc(10vh + ${index * 28}px)` }}
         className="w-full max-w-7xl mx-auto rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 flex flex-col gap-6 md:gap-8 origin-top relative"
       >
         {/* Top Row */}
@@ -165,6 +174,7 @@ export default function ProjectsSection() {
 
   return (
     <section 
+      id="projects"
       ref={containerRef} 
       className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-20 px-5 sm:px-8 md:px-10 pb-40"
     >

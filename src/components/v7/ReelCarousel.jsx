@@ -91,29 +91,41 @@ export default function ReelCarousel() {
         }
       }
 
-      // 3. Update 3D Curves based on true screen position
-      const centerX = window.innerWidth / 2;
-      const maxDistance = window.innerWidth / 1.5;
+      // 3. Update 3D Curves based on true screen position (Desktop Only)
+      const isMobile = window.innerWidth < 768;
+      
+      if (!isMobile) {
+        const centerX = window.innerWidth / 2;
+        const maxDistance = window.innerWidth / 1.5;
 
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.left + rect.width / 2;
-        const distanceFromCenter = cardCenter - centerX;
-        
-        let normalizedDist = Math.max(-1, Math.min(1, distanceFromCenter / maxDistance));
-        
-        const rotateY = normalizedDist * -50; 
-        const scale = 1 - Math.abs(normalizedDist) * 0.15;
-        const translateZ = Math.abs(normalizedDist) * -300;
-        
-        card.style.transform = `translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-        
-        const imgOverlay = card.querySelector('.cinematic-overlay');
-        if (imgOverlay) {
-            const opacity = Math.abs(normalizedDist) * 0.4;
-            imgOverlay.style.backgroundColor = `rgba(0,0,0,${opacity})`;
-        }
-      });
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const distanceFromCenter = cardCenter - centerX;
+          
+          let normalizedDist = Math.max(-1, Math.min(1, distanceFromCenter / maxDistance));
+          
+          const rotateY = normalizedDist * -50; 
+          const scale = 1 - Math.abs(normalizedDist) * 0.15;
+          const translateZ = Math.abs(normalizedDist) * -300;
+          
+          card.style.transform = `translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+          
+          const imgOverlay = card.querySelector('.cinematic-overlay');
+          if (imgOverlay) {
+              const opacity = Math.abs(normalizedDist) * 0.4;
+              imgOverlay.style.backgroundColor = `rgba(0,0,0,${opacity})`;
+          }
+        });
+      } else {
+        cards.forEach((card) => {
+          if (card.style.transform !== 'none') {
+            card.style.transform = 'none';
+            const imgOverlay = card.querySelector('.cinematic-overlay');
+            if (imgOverlay) imgOverlay.style.backgroundColor = 'transparent';
+          }
+        });
+      }
 
       animationFrameId = window.requestAnimationFrame(updateLoop);
     };

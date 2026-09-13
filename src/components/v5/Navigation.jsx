@@ -48,7 +48,7 @@ export default function Navigation() {
 
           {/* Desktop CTA (Far Right) */}
           <a 
-            href="#contact"
+            href="mailto:contact@camstarnetwork.com"
             className="hidden md:flex items-center justify-center h-10 px-7 rounded-full bg-[#111] text-white text-[13px] font-bold hover:bg-[#333] transition-colors shrink-0"
           >
             Start Project
@@ -91,7 +91,7 @@ export default function Navigation() {
                 </Link>
               ))}
               <a 
-                href="#contact"
+                href="mailto:contact@camstarnetwork.com"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mt-8 px-8 py-4 rounded-full bg-[#111] text-white text-lg font-bold"
               >

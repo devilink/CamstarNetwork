@@ -14,6 +14,7 @@ const CARD_VIDEOS = [
 ];
 
 export default function BankCardsSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const cardCount = 56;
   const cardsRefs = useRef([]);
   const frameId = useRef(0);
@@ -63,6 +64,7 @@ export default function BankCardsSection() {
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
+      setIsMobile(w < 768);
 
       // 1. Calculate Card Metrics (shrink cards if height is small to save vertical space)
       let cardW = Math.round(w * 0.16 + 130);
@@ -71,6 +73,9 @@ export default function BankCardsSection() {
       cardW = Math.round(cardW * heightFactor);
       
       cardW = Math.min(336, Math.max(150, cardW));
+      if (w < 768) {
+        cardW = Math.min(240, w * 0.8); // Shrink on mobile for performance
+      }
       const cardH = Math.round(cardW / 1.5925); // Standard credit card ratio
 
       setMetrics({ cardW, cardH });
@@ -259,7 +264,8 @@ export default function BankCardsSection() {
 
   // Slices for 3D volumetric depth with 30% reduced thickness
   // Span from -1.47px to 1.47px creates an extremely premium real 3D volume feel
-  const thicknessLayers = [-1.47, -0.73, 0, 0.73, 1.47];
+  // On mobile, we ONLY render the front face (1 layer) to dramatically improve performance
+  const thicknessLayers = isMobile ? [0] : [-1.47, -0.73, 0, 0.73, 1.47];
   const rowCount = Math.ceil(cardCount / 3);
 
   return (

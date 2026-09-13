@@ -53,7 +53,7 @@ export default function Navbar() {
 
             {/* CTA / Mobile Toggle */}
             <div className="flex items-center gap-2">
-              <a href="#contact" className="hidden md:block px-5 py-2 rounded-full bg-white text-black font-sans text-sm font-bold hover:scale-105 transition-transform">
+              <a href="mailto:contact@camstarnetwork.com" className="hidden md:block px-5 py-2 rounded-full bg-white text-black font-sans text-sm font-bold hover:scale-105 transition-transform">
                 Let's Talk
               </a>
               
@@ -102,7 +102,7 @@ export default function Navbar() {
               ))}
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
                 <a 
-                  href="#contact" 
+                  href="mailto:contact@camstarnetwork.com" 
                   onClick={() => setMobileMenuOpen(false)}
                   className="mt-4 px-8 py-4 rounded-full bg-gradient-to-r from-[#ff3333] to-[#ff6b33] text-white font-sans font-bold text-lg shadow-lg shadow-red-500/20"
                 >
