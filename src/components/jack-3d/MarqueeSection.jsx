@@ -62,7 +62,7 @@ export default function MarqueeSection() {
             alt=""
             width={420}
             height={270}
-            className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0"
+            className="w-[280px] h-[180px] sm:w-[420px] sm:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0"
             unoptimized={true}
           />
         ))}
@@ -80,7 +80,7 @@ export default function MarqueeSection() {
             alt=""
             width={420}
             height={270}
-            className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0"
+            className="w-[280px] h-[180px] sm:w-[420px] sm:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0"
             unoptimized={true}
           />
         ))}

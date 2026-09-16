@@ -5,6 +5,7 @@ import AboutSection from "@/components/jack-3d/AboutSection";
 import BankCardsSection from "@/components/jack-3d/BankCardsSection";
 import ServicesSection from "@/components/jack-3d/ServicesSection";
 import ProjectsSection from "@/components/jack-3d/ProjectsSection";
+import DigitalSkillsSection from "@/components/jack-3d/DigitalSkillsSection";
 import CamstarFooter from "@/components/jack-3d/CamstarFooter";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <FlowpathHero />
       <ReelCarousel />
       <MarqueeSection />
+      <DigitalSkillsSection />
       <AboutSection />
       <BankCardsSection />
       <ServicesSection />

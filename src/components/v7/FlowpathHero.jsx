@@ -87,7 +87,7 @@ export default function FlowpathHero() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div 
-            className="absolute top-full left-4 right-4 mt-2 bg-[#2C221C]/95 backdrop-blur-xl rounded-2xl p-6 lg:hidden shadow-2xl animate-dropdown"
+            className="absolute top-full left-4 right-4 mt-2 bg-[#0C0C0C]/95 backdrop-blur-xl rounded-2xl p-6 lg:hidden shadow-2xl animate-dropdown border border-white/10"
             style={{ animationTimingFunction: 'cubic-bezier(0.16,1,0.3,1)', animationDuration: '400ms' }}
           >
             <div className="flex flex-col gap-4">
@@ -106,7 +106,7 @@ export default function FlowpathHero() {
                 </div>
               ))}
               <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-4">
-                <a href="mailto:contact@camstarnetwork.com" className="inline-flex items-center justify-center h-12 bg-white text-gray-900 rounded-full px-6 text-sm font-semibold hover:bg-white/90 transition-colors">
+                <a href="mailto:contact@camstarnetwork.com" className="inline-flex items-center justify-center h-12 bg-white text-[#0C0C0C] rounded-full px-6 text-sm font-semibold hover:bg-white/90 transition-colors">
                   Contact Us
                 </a>
               </div>

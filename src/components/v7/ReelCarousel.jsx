@@ -74,11 +74,6 @@ export default function ReelCarousel() {
     }
 
     const updateLoop = () => {
-      // 1. Auto-scroll logic
-      if (!isHovered && !isDragging) {
-        container.scrollLeft += 1; // Speed of auto-pan
-      }
-
       // 2. Infinite Loop Wrap Around Logic
       const cards = container.querySelectorAll('.cinematic-card');
       if (cards.length > 0) {
@@ -144,6 +139,28 @@ export default function ReelCarousel() {
     };
   }, []);
 
+  const animateScroll = (amount) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const start = container.scrollLeft;
+    const duration = 400;
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutCubic
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      
+      container.scrollLeft = start + (amount * easeProgress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(animate);
+      }
+    };
+    window.requestAnimationFrame(animate);
+  };
+
   // 4 sets of images for seamless padding while scrolling
   const multipliedCards = [...images, ...images, ...images, ...images];
 
@@ -160,6 +177,27 @@ export default function ReelCarousel() {
       </div>
 
       <div className="w-full relative">
+        {/* Navigation Arrows */}
+        <button 
+          onClick={() => animateScroll(-500)}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/80 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-gray-200 flex items-center justify-center hover:scale-110 hover:bg-white hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all text-gray-800 group"
+          aria-label="Scroll left"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:-translate-x-1 transition-transform w-6 h-6 md:w-8 md:h-8">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <button 
+          onClick={() => animateScroll(500)}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/80 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-gray-200 flex items-center justify-center hover:scale-110 hover:bg-white hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all text-gray-800 group"
+          aria-label="Scroll right"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform w-6 h-6 md:w-8 md:h-8">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
+
         {/* Fading Edges */}
         <div className="absolute inset-y-0 left-0 w-[15vw] bg-gradient-to-r from-[#f8f8f8] to-transparent z-20 pointer-events-none"></div>
         <div className="absolute inset-y-0 right-0 w-[15vw] bg-gradient-to-l from-[#f8f8f8] to-transparent z-20 pointer-events-none"></div>
