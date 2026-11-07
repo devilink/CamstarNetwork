@@ -26,18 +26,24 @@ export default function SmoothScroll({ children }) {
     // Synchronize Lenis with GSAP's ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
+    // Expose so the page loader can pause scrolling while it's visible
+    window.__lenis = lenis;
+    if (document.documentElement.style.overflow === "hidden") lenis.stop();
+
     // Add Lenis's requestAnimationFrame to GSAP's ticker
-    gsap.ticker.add((time) => {
+    const raf = (time) => {
       lenis.raf(time * 1000); // GSAP's ticker uses seconds, Lenis needs ms
-    });
+    };
+    gsap.ticker.add(raf);
 
     // Disable GSAP's lag smoothing to prevent jitter with Lenis
     gsap.ticker.lagSmoothing(0);
 
     // Cleanup
     return () => {
+      gsap.ticker.remove(raf);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      if (window.__lenis === lenis) delete window.__lenis;
     };
   }, []);
 

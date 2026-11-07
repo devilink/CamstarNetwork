@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
+import Loader from "@/components/Loader";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
       <body className="antialiased bg-[#fafafa] text-[#111111] font-sans selection:bg-[#9f7aea] selection:text-white">
+        <Loader />
         <SmoothScroll>
           {children}
         </SmoothScroll>
